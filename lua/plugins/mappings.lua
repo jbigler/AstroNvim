@@ -6,7 +6,7 @@ return {
       mappings = {
         -- first key is the mode
         n = {
-          ["<leader>q"] = {
+          ["<Leader>q"] = {
             function()
               for _, ui in pairs(vim.api.nvim_list_uis()) do
                 if ui.chan and not ui.stdout_tty then
