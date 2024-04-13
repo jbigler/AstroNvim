@@ -56,7 +56,6 @@ return {
   },
   {
     "tpope/vim-rails",
-    event = "BufRead",
     -- config = function()
     --   -- Make Ruby instance variables and class variables highlight better
     --   -- https://github.com/tree-sitter/tree-sitter-ruby/issues/184
