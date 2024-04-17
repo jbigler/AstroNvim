@@ -5,6 +5,7 @@
 ---@type LazySpec
 return {
   { "AstroNvim/astrocommunity" },
+  { import = "astrocommunity.color.nvim-highlight-colors" },
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.motion.nvim-surround" },
   { import = "astrocommunity.markdown-and-latex.peek-nvim" },
@@ -15,7 +16,7 @@ return {
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.colorscheme.kanagawa-nvim" },
   { import = "astrocommunity.colorscheme.tokyonight-nvim" },
-  { import = "astrocommunity.completion.copilot-lua" },
+  { import = "astrocommunity.completion.copilot-lua-cmp" },
   {
     "zbirenbaum/copilot.lua",
     opts = {
