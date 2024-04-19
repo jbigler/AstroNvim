@@ -140,6 +140,18 @@ return {
           },
         },
       },
+      solargraph = {
+        autoformat = false,
+        completion = true,
+        -- useBundler = true,
+        diagnostic = false,
+        logLevel = "debug",
+        folding = false,
+        references = true,
+        formatting = false,
+        rename = true,
+        symbols = false,
+      },
       -- stylelint_lsp = {
       --   autoFixOnFormat = true,
       --   autoFixOnSave = true,
