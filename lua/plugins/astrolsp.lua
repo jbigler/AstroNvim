@@ -113,7 +113,7 @@ return {
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
-      ruby_ls = {
+      ruby_lsp = {
         -- cmd = { 'ruby-lsp' },
         on_attach = function(client, buffer)
           -- client.server_capabilities.semanticTokensProvider = nil
@@ -134,7 +134,8 @@ return {
           tailwindCSS = {
             experimental = {
               classRegex = {
-                "class: \"|'([^\"|']*)",
+                'class:\\s*"([^"]*)"',
+                "class:\\s*'([^']*)'",
               },
             },
           },
