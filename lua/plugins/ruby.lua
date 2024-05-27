@@ -74,4 +74,8 @@ return {
     --   })
     -- end,
   },
+  {
+    "tpope/vim-abolish",
+    lazy = false,
+  },
 }
