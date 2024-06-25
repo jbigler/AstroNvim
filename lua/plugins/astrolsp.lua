@@ -87,7 +87,9 @@ return {
             experimental = {
               classRegex = {
                 'class:\\s*"([^"]*)"',
+                'class=\\s*"([^"]*)"',
                 "class:\\s*'([^']*)'",
+                "class=\\s*'([^']*)'",
               },
             },
           },
