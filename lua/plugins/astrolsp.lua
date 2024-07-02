@@ -3,6 +3,14 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
+local function ruby_lsp_cmd()
+  if vim.fn.executable "mise" == 1 then
+    return { "mise", "x", "--", "ruby-lsp" }
+  else
+    return { "ruby-lsp" }
+  end
+end
+
 local function add_ruby_deps_command(client, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, "ShowRubyDeps", function(opts)
     local params = vim.lsp.util.make_text_document_params()
@@ -72,6 +80,7 @@ return {
     config = {
       ruby_lsp = {
         on_attach = function(client, buffer) add_ruby_deps_command(client, buffer) end,
+        cmd = ruby_lsp_cmd(),
       },
       html = {
         filetypes = { "html", "eruby" },
