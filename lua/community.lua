@@ -37,6 +37,7 @@ return {
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
   { import = "astrocommunity.editing-support.undotree" },
   { import = "astrocommunity.file-explorer.oil-nvim" },
+  { import = "astrocommunity.git.octo-nvim" },
   { import = "astrocommunity.motion.flash-nvim" },
   { import = "astrocommunity.motion.harpoon" },
   { import = "astrocommunity.motion.mini-ai" },

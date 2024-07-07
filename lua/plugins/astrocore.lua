@@ -36,6 +36,8 @@ return {
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
         --
+        -- I was able to put all of this section in an osc.lua plugin file
+        -- and it works great for docker!
         -- clipboard = {
         --   name = "OSC 52",
         --   copy = {
