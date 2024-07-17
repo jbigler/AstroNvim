@@ -56,23 +56,13 @@ return {
   },
   {
     "tpope/vim-rails",
-    -- config = function()
-    --   -- Make Ruby instance variables and class variables highlight better
-    --   -- https://github.com/tree-sitter/tree-sitter-ruby/issues/184
-    --   vim.cmd "hi! link @label.ruby @property"
-    --
-    --   -- Better differentiate Ruby symbols from other syntax
-    --   -- This also makes JS rest parameters and Ruby keyword arguments the same color
-    --   vim.cmd "hi! link @symbol.ruby @parameter"
-    --   -- Tpope's vim-rails sets the filetype of a lot of Rails yaml files to eruby.yaml,
-    --   -- but treesitter highlights those horribly. Basically all white.
-    --   -- Just revert it back to yaml...
-    --   vim.api.nvim_create_autocmd("FileType", {
-    --     callback = function()
-    --       if vim.bo.filetype == "eruby.yaml" then vim.bo.filetype = "yaml" end
-    --     end,
-    --   })
-    -- end,
+    config = function()
+      vim.api.nvim_create_user_command(
+        "AC",
+        function() vim.cmd("e " .. vim.fn.eval "rails#buffer().alternate()") end,
+        {}
+      )
+    end,
   },
   {
     "tpope/vim-abolish",
