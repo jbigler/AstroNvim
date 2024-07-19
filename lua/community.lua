@@ -41,7 +41,6 @@ return {
   { import = "astrocommunity.git.octo-nvim" },
   { import = "astrocommunity.motion.flash-nvim" },
   { import = "astrocommunity.motion.harpoon" },
-  { import = "astrocommunity.motion.mini-ai" },
   { import = "astrocommunity.motion.vim-matchup" },
   { import = "astrocommunity.motion.nvim-spider" },
   { import = "astrocommunity.motion.nvim-surround" },
