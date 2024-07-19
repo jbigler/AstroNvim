@@ -36,6 +36,7 @@ return {
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
   { import = "astrocommunity.editing-support.refactoring-nvim" },
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
+  { import = "astrocommunity.editing-support.text-case-nvim" },
   { import = "astrocommunity.editing-support.undotree" },
   { import = "astrocommunity.file-explorer.oil-nvim" },
   { import = "astrocommunity.git.octo-nvim" },
