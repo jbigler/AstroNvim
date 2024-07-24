@@ -57,6 +57,8 @@ return {
   {
     "tpope/vim-rails",
     config = function()
+      -- For some reason this one won't work, it just opens the alternate
+      -- vim.api.nvim_create_user_command("RC", function() vim.cmd("e " .. vim.fn.eval "rails#buffer().related()") end, {})
       vim.api.nvim_create_user_command(
         "AC",
         function() vim.cmd("e " .. vim.fn.eval "rails#buffer().alternate()") end,
