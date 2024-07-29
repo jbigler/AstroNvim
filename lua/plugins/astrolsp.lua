@@ -80,6 +80,13 @@ return {
       ruby_lsp = {
         on_attach = function(client, buffer) add_ruby_deps_command(client, buffer) end,
         cmd = ruby_lsp_cmd(),
+        init_options = {
+          featuresConfiguration = {
+            inlayHint = {
+              enableAll = true,
+            },
+          },
+        },
       },
       html = {
         filetypes = { "html", "eruby" },
