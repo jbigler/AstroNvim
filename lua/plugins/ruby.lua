@@ -6,10 +6,10 @@ return {
       if opts.ensure_installed ~= "all" then
         opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "ruby" })
       end
-      opts.highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = { "ruby", "eruby" },
-      }
+      -- opts.highlight = {
+      --   enable = true,
+      --   additional_vim_regex_highlighting = { "ruby", "eruby" },
+      -- }
     end,
   },
   {
