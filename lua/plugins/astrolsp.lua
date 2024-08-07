@@ -78,7 +78,15 @@ return {
     ---@diagnostic disable: missing-fields
     config = {
       ruby_lsp = {
-        on_attach = function(client, buffer) add_ruby_deps_command(client, buffer) end,
+        on_attach = function(client, buffer)
+          add_ruby_deps_command(client, buffer)
+
+          client.commands["rubyLsp.runTestInTerminal"] = function(command)
+            local shell_command = command.arguments[3]
+            vim.cmd "split"
+            vim.cmd("terminal " .. shell_command)
+          end
+        end,
         cmd = ruby_lsp_cmd(),
         init_options = {
           featuresConfiguration = {
