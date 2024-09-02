@@ -1,10 +1,5 @@
 return {
   {
-    "razak17/tailwind-fold.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    ft = { "html", "eruby" },
-  },
-  {
     "nvim-treesitter/nvim-treesitter",
     optional = true,
     opts = function(_, opts)
