@@ -1,5 +1,10 @@
 return {
   {
+    "razak17/tailwind-fold.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    ft = { "html", "embedded_template" },
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     optional = true,
     opts = function(_, opts)
@@ -73,6 +78,7 @@ return {
         pattern = { "*.yml" },
         callback = function() vim.bo.filetype = "yaml" end,
       })
+      -- vim.cmd "cmap <buffer><script><expr> <Plug><cfile> rails#ruby_cfile()"
     end,
   },
 }
