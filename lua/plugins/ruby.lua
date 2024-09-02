@@ -2,7 +2,7 @@ return {
   {
     "razak17/tailwind-fold.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    ft = { "html", "embedded_template" },
+    ft = { "html", "eruby" },
   },
   {
     "nvim-treesitter/nvim-treesitter",
