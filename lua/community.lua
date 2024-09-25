@@ -50,6 +50,8 @@ return {
   { import = "astrocommunity.motion.nvim-surround" },
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.pack.clojure" },
+  { import = "astrocommunity.pack.chezmoi" },
+  { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.tailwindcss" },
   { import = "astrocommunity.pack.full-dadbod" },

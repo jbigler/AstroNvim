@@ -118,10 +118,10 @@ return {
           },
         },
       },
-      -- stylelint_lsp = {
-      --   autoFixOnFormat = true,
-      --   autoFixOnSave = true,
-      -- },
+      stylelint_lsp = {
+        autoFixOnFormat = true,
+        autoFixOnSave = false,
+      },
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
     },
     -- customize how language servers are attached
