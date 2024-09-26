@@ -12,15 +12,15 @@ return {
           ["<up>"] = { function() mc.addCursor "k" end },
           ["<down>"] = { function() mc.addCursor "j" end },
 
-          -- Add a cursor and jump to the next word under cursor.
-          ["<c-n>"] = { function() mc.addCursor "*" end },
+          -- Add a cursor and jump to the cursor.
+          ["<m-a>"] = { function() mc.addCursor "*" end },
 
           -- Jump to the next word under cursor but do not add a cursor.
-          ["<c-s>"] = { function() mc.skipCursor "*" end },
+          ["<m-s>"] = { function() mc.skipCursor "*" end },
 
           -- Rotate the main cursor.
-          ["<left>"] = { mc.nextCursor },
-          ["<right>"] = { mc.prevCursor },
+          ["<left>"] = { mc.prevCursor },
+          ["<right>"] = { mc.nextCursor },
 
           -- Delete the main cursor.
           ["<leader>x"] = { mc.deleteCursor },
@@ -51,14 +51,12 @@ return {
                 mc.enableCursors()
               elseif mc.hasCursors() then
                 mc.clearCursors()
-              else
-                -- Default <esc> handler.
               end
             end,
           },
 
           -- Align cursor columns.
-          ["<leader>a"] = { mc.alignCursors },
+          ["<leader>a"] = { mc.alignCursors, desc = "Align cursors" },
         } do
           maps.n[lhs] = map
         end
