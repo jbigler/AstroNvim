@@ -6,7 +6,6 @@
 return {
   { "AstroNvim/astrocommunity" },
   { import = "astrocommunity.color.nvim-highlight-colors" },
-  { import = "astrocommunity.markdown-and-latex.peek-nvim" },
   {
     "toppair/peek.nvim",
     opts = { app = "google-chrome-stable", "--new-window" },
@@ -43,6 +42,8 @@ return {
   { import = "astrocommunity.editing-support.yanky-nvim" },
   { import = "astrocommunity.file-explorer.oil-nvim" },
   { import = "astrocommunity.git.octo-nvim" },
+  { import = "astrocommunity.markdown-and-latex.peek-nvim" },
+  { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
   { import = "astrocommunity.motion.flash-nvim" },
   { import = "astrocommunity.motion.harpoon" },
   { import = "astrocommunity.motion.vim-matchup" },
