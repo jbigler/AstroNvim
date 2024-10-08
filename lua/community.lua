@@ -54,6 +54,7 @@ return {
   { import = "astrocommunity.pack.chezmoi" },
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.lua" },
+  { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.pack.tailwindcss" },
   { import = "astrocommunity.pack.full-dadbod" },
   { import = "astrocommunity.split-and-window.mini-map" },
