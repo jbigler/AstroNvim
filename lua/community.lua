@@ -39,7 +39,6 @@ return {
   { import = "astrocommunity.editing-support.text-case-nvim" },
   { import = "astrocommunity.editing-support.todo-comments-nvim" },
   { import = "astrocommunity.editing-support.undotree" },
-  { import = "astrocommunity.editing-support.yanky-nvim" },
   { import = "astrocommunity.file-explorer.oil-nvim" },
   { import = "astrocommunity.git.octo-nvim" },
   { import = "astrocommunity.markdown-and-latex.peek-nvim" },
