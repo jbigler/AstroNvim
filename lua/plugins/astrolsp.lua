@@ -105,6 +105,7 @@ return {
         },
       },
       tailwindcss = {
+        filetypes = { "html", "eruby", "ruby" },
         settings = {
           tailwindCSS = {
             experimental = {
@@ -113,6 +114,7 @@ return {
                 'class=\\s*"([^"]*)"',
                 "class:\\s*'([^']*)'",
                 "class=\\s*'([^']*)'",
+                "%w\\[([^\\]]*)\\]",
               },
             },
             lint = {
