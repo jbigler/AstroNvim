@@ -13,7 +13,6 @@ return {
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.colorscheme.kanagawa-nvim" },
   { import = "astrocommunity.colorscheme.rose-pine" },
-  { import = "astrocommunity.colorscheme.tokyonight-nvim" },
   { import = "astrocommunity.completion.copilot-lua-cmp" },
   {
     "zbirenbaum/copilot.lua",
