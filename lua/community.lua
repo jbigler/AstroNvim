@@ -5,6 +5,7 @@
 ---@type LazySpec
 return {
   { "AstroNvim/astrocommunity" },
+  { import = "astrocommunity.bars-and-lines.vim-illuminate" },
   { import = "astrocommunity.color.nvim-highlight-colors" },
   {
     "toppair/peek.nvim",
@@ -13,22 +14,23 @@ return {
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.colorscheme.kanagawa-nvim" },
   { import = "astrocommunity.colorscheme.rose-pine" },
+  { import = "astrocommunity.completion.avante-nvim" },
   { import = "astrocommunity.completion.copilot-lua-cmp" },
-  {
-    "zbirenbaum/copilot.lua",
-    opts = {
-      suggestion = {
-        keymap = {
-          accept = "<M-g>",
-          accept_word = false,
-          accept_line = false,
-          next = "<M-f>",
-          prev = "<M-d>",
-          dismiss = "<M-a>",
-        },
-      },
-    },
-  },
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   opts = {
+  --     suggestion = {
+  --       keymap = {
+  --         accept = "<M-g>",
+  --         accept_word = false,
+  --         accept_line = false,
+  --         next = "<M-f>",
+  --         prev = "<M-d>",
+  --         dismiss = "<M-a>",
+  --       },
+  --     },
+  --   },
+  -- },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
   { import = "astrocommunity.docker.lazydocker" },
   { import = "astrocommunity.editing-support.copilotchat-nvim" },
