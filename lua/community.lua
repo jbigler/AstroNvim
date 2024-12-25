@@ -41,6 +41,7 @@ return {
   { import = "astrocommunity.editing-support.todo-comments-nvim" },
   { import = "astrocommunity.editing-support.undotree" },
   { import = "astrocommunity.file-explorer.oil-nvim" },
+  { import = "astrocommunity.git.diffview-nvim" },
   { import = "astrocommunity.git.octo-nvim" },
   { import = "astrocommunity.markdown-and-latex.peek-nvim" },
   { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
