@@ -59,5 +59,7 @@ return {
   { import = "astrocommunity.pack.tailwindcss" },
   { import = "astrocommunity.pack.full-dadbod" },
   { import = "astrocommunity.split-and-window.mini-map" },
+  { import = "astrocommunity.test.neotest" },
+  { import = "astrocommunity.test.nvim-coverage" },
   -- import/override with your plugins folder
 }

@@ -1,4 +1,5 @@
 return {
+  { "zidhuss/neotest-minitest" },
   {
     "nvim-treesitter/nvim-treesitter",
     optional = true,
