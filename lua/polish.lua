@@ -1,4 +1,4 @@
-if true then return end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+vim.cmd "autocmd FileType ruby setlocal indentkeys-=."
 
 -- This will run last in the setup process and is a good place to configure
 -- things like custom filetypes. This just pure lua so anything that doesn't
@@ -28,3 +28,6 @@ if true then return end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 --     vim.cmd "if RailsDetect() | cmap <buffer><script><expr> <Plug><cfile> rails#ruby_cfile() | endif"
 --   end,
 -- })
+--
+-- Function to copy the current file path to the system clipboard
+-- nmap <leader>cp :let @+ = expand("%")<CR>
