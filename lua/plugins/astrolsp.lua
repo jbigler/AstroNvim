@@ -72,22 +72,15 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {
-      -- "pyright"
+      "ruby_lsp",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
       ruby_lsp = {
-        on_attach = function(client, buffer)
-          add_ruby_deps_command(client, buffer)
-
-          client.commands["rubyLsp.runTestInTerminal"] = function(command)
-            local shell_command = command.arguments[3]
-            vim.cmd "split"
-            vim.cmd("terminal " .. shell_command)
-          end
-        end,
+        mason = false,
         cmd = ruby_lsp_cmd(),
+        on_attach = function(client, buffer) add_ruby_deps_command(client, buffer) end,
         init_options = {
           featuresConfiguration = {
             inlayHint = {
