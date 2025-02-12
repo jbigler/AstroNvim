@@ -4,6 +4,7 @@ return {
     opts = {
       copilot = {
         endpoint = "https://api.githubcopilot.com/",
+        -- model = "o3-mini"
         model = "claude-3.5-sonnet",
         proxy = nil, -- [protocol://]host[:port] Use this proxy
         allow_insecure = false, -- Allow insecure server connections

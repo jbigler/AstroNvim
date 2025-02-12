@@ -9,7 +9,7 @@ return {
       end
       opts.highlight = {
         enable = true,
-        -- additional_vim_regex_highlighting = { "ruby", "embedded_template" },
+        additional_vim_regex_highlighting = { "ruby" },
       }
     end,
   },
