@@ -97,25 +97,6 @@ return {
           configurationSection = { "html", "css", "javascript", "eruby", "ruby" },
         },
       },
-      tailwindcss = {
-        filetypes = { "html", "eruby", "ruby" },
-        settings = {
-          tailwindCSS = {
-            experimental = {
-              classRegex = {
-                'class:\\s*"([^"]*)"',
-                'class=\\s*"([^"]*)"',
-                "class:\\s*'([^']*)'",
-                "class=\\s*'([^']*)'",
-                "%w\\[([^\\]]*)\\]",
-              },
-            },
-            lint = {
-              invalidApply = "ignore",
-            },
-          },
-        },
-      },
       cssls = {
         settings = {
           css = {
