@@ -6,6 +6,19 @@ return {
       mappings = {
         -- first key is the mode
         n = {
+          ["<Leader>by"] = {
+            function()
+              local relative_path = vim.fn.fnamemodify(vim.fn.expand "%", ":.")
+              -- Copy to system clipboard (*)
+              vim.fn.setreg("*", relative_path)
+              -- Copy to default yank register (") for pasting with p
+              vim.fn.setreg('"', relative_path)
+              -- Also copy to + register for X11 systems
+              vim.fn.setreg("+", relative_path)
+              vim.notify("Copied: " .. relative_path, vim.log.levels.INFO)
+            end,
+            desc = "Copy the current relative file path",
+          },
           ["<Leader>q"] = {
             function()
               for _, ui in pairs(vim.api.nvim_list_uis()) do
