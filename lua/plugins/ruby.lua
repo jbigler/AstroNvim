@@ -9,7 +9,8 @@ return {
       end
       opts.highlight = {
         enable = true,
-        additional_vim_regex_highlighting = { "ruby" },
+        -- Disable due to issues with incorrect block detection
+        -- additional_vim_regex_highlighting = { "ruby" },
       }
     end,
   },
