@@ -27,7 +27,7 @@ return {
         opts = {
           config = {
             tailwindcss = {
-              -- filetypes = { "html", "eruby", "ruby" },
+              filetypes = { "html", "eruby", "ruby" },
               settings = {
                 tailwindCSS = {
                   experimental = {
@@ -57,7 +57,8 @@ return {
                   "tailwind.config.ts",
                   "postcss.config.js",
                   "config/tailwind.config.js",
-                  "app/assets/tailwind.config.js"
+                  "app/assets/tailwind.config.js",
+                  "app/assets/tailwind/lsp.css"
                 )(fname)
                 -- If not found, check for package.json dependencies
                 if not root then
@@ -118,5 +119,11 @@ return {
         tailwind = true,
       },
     },
+  },
+  {
+    "laytan/tailwind-sorter.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-lua/plenary.nvim" },
+    build = "cd formatter && npm ci && npm run build",
+    config = true,
   },
 }
