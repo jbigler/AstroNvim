@@ -40,6 +40,7 @@ return {
   { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.pack.tailwindcss" },
   { import = "astrocommunity.pack.typescript" },
+  { import = "astrocommunity.recipes.picker-lsp-mappings" },
   { import = "astrocommunity.split-and-window.mini-map" },
   -- import/override with your plugins folder
 }
