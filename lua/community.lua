@@ -10,7 +10,7 @@ return {
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.colorscheme.rose-pine" },
   { import = "astrocommunity.completion.avante-nvim" },
-  { import = "astrocommunity.completion.copilot-cmp" },
+  { import = "astrocommunity.completion.copilot-lua-cmp" },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
   { import = "astrocommunity.docker.lazydocker" },
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
