@@ -38,7 +38,7 @@ return {
                       "class=\\s*'([^']*)'",
                       "%w\\[([^\\]]*)\\]",
                     },
-                    configFile = "app/assets/tailwind/lsp.css",
+                    configFile = "app/assets/tailwind/application.css",
                   },
                   lint = {
                     invalidApply = "ignore",
@@ -58,7 +58,7 @@ return {
                   "postcss.config.js",
                   "config/tailwind.config.js",
                   "app/assets/tailwind.config.js",
-                  "app/assets/tailwind/lsp.css"
+                  "app/assets/tailwind/application.css"
                 )(fname)
                 -- If not found, check for package.json dependencies
                 if not root then
