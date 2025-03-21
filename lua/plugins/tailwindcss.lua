@@ -50,7 +50,6 @@ return {
 
                 -- First, check for common Tailwind config files
                 local root = root_pattern(
-                  "app/assets/tailwind/lsp.css",
                   "tailwind.config.mjs",
                   "tailwind.config.cjs",
                   "tailwind.config.js",
