@@ -13,7 +13,7 @@ return {
       large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
-      diagnostics_mode = 3, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
+      diagnostics = { virtual_text = true, virtual_lines = false }, -- diagnostic settings on startup
       highlighturl = true, -- highlight URLs at start
       notifications = true, -- enable notifications at start
     },
@@ -35,20 +35,6 @@ return {
         -- configure global vim variables (vim.g)
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
-        --
-        -- I was able to put all of this section in an osc.lua plugin file
-        -- and it works great for docker!
-        -- clipboard = {
-        --   name = "OSC 52",
-        --   copy = {
-        --     ["+"] = require("vim.ui.clipboard.osc52").copy "+",
-        --     ["*"] = require("vim.ui.clipboard.osc52").copy "*",
-        --   },
-        -- paste = {
-        --   ["+"] = require("vim.ui.clipboard.osc52").paste "+",
-        --   ["*"] = require("vim.ui.clipboard.osc52").paste "*",
-        -- },
-        -- },
       },
     },
     -- Mappings can be configured through AstroCore as well.

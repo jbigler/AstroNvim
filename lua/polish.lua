@@ -1,7 +1,7 @@
 vim.cmd "autocmd FileType ruby setlocal indentkeys-=."
 
 -- This will run last in the setup process and is a good place to configure
--- things like custom filetypes. This just pure lua so anything that doesn't
+-- things like custom filetypes. This is just pure lua so anything that doesn't
 -- fit in the normal config locations above can go here
 
 -- Set up custom filetypes
@@ -44,6 +44,3 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     if is_rails then vim.cmd "cmap <buffer><script><expr> <Plug><cfile> rails#ruby_cfile()" end
   end,
 })
---
--- Function to copy the current file path to the system clipboard
--- nmap <leader>cp :let @+ = expand("%")<CR>
