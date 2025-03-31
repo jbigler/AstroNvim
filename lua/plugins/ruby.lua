@@ -1,6 +1,11 @@
 return {
   { "zidhuss/neotest-minitest" },
   {
+    "rafamadriz/friendly-snippets",
+    dependencies = { "L3MON4D3/LuaSnip" },
+    config = function() require("luasnip").filetype_extend("ruby", { "rails" }) end,
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     optional = true,
     opts = function(_, opts)
