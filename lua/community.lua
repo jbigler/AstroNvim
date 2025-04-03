@@ -9,7 +9,7 @@ return {
   { import = "astrocommunity.colorscheme.rose-pine" },
   { import = "astrocommunity.completion.avante-nvim" },
   { import = "astrocommunity.completion.copilot-lua-cmp" },
-  -- { import = "astrocommunity.diagnostics.trouble-nvim" },
+  { import = "astrocommunity.diagnostics.trouble-nvim" },
   -- { import = "astrocommunity.docker.lazydocker" },
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
@@ -36,8 +36,8 @@ return {
   { import = "astrocommunity.pack.html-css" },
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.markdown" },
-  -- { import = "astrocommunity.pack.tailwindcss" },
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.recipes.picker-lsp-mappings" },
   { import = "astrocommunity.split-and-window.mini-map" },
+  { import = "astrocommunity.utility.noice-nvim" },
 }
