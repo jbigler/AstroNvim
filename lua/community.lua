@@ -8,6 +8,7 @@ return {
   { import = "astrocommunity.bars-and-lines.vim-illuminate" },
   { import = "astrocommunity.colorscheme.rose-pine" },
   { import = "astrocommunity.completion.avante-nvim" },
+  { import = "astrocommunity.completion.blink-cmp-git" },
   { import = "astrocommunity.completion.copilot-lua-cmp" },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
   -- { import = "astrocommunity.docker.lazydocker" },
