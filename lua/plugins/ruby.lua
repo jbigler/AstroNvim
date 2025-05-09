@@ -47,8 +47,8 @@ return {
       table.insert(dap.configurations.ruby, 2, {
         type = "ruby",
         name = "Debug file in container",
-        bundle = "bundle",
         request = "attach",
+        bundle = "bundle",
         command = "ruby",
         script = "${file}",
         port = 38698,
@@ -57,6 +57,7 @@ return {
           source_filetype = "ruby",
         },
         localfs = false,
+        localfsMap = vim.env.RUBY_DEBUG_LOCAL_FS_MAP,
         waiting = 1000,
       })
     end,

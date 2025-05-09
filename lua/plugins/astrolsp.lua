@@ -65,7 +65,7 @@ return {
         -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
         -- "lua_ls",
       },
-      timeout_ms = 1000, -- default format timeout
+      timeout_ms = 10000, -- default format timeout
       -- filter = function(client) -- fully override the default formatting function
       --   return true
       -- end
@@ -82,11 +82,31 @@ return {
         cmd = ruby_lsp_cmd(),
         on_attach = function(client, buffer) add_ruby_deps_command(client, buffer) end,
         init_options = {
+          formatter = "auto",
+          enabledFeatures = {
+            codeActions = true,
+            diagnostics = true,
+            documentHighlights = true,
+            documentLink = true,
+            documentSymbols = true,
+            foldingRanges = true,
+            formatting = true,
+            hover = true,
+            inlayHint = true,
+            selectionRanges = true,
+            completion = true,
+            codeLens = true,
+            definition = true,
+            workspaceSymbol = true,
+            signatureHel = true,
+          },
           featuresConfiguration = {
             inlayHint = {
-              enableAll = true,
+              implicitHashValue = true,
+              implicitRescue = true,
             },
           },
+          experimentalFeaturesEnabled = true,
         },
       },
       html = {
