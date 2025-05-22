@@ -16,6 +16,7 @@ return {
   { import = "astrocommunity.editing-support.refactoring-nvim" },
   { import = "astrocommunity.editing-support.text-case-nvim" },
   { import = "astrocommunity.editing-support.todo-comments-nvim" },
+  { import = "astrocommunity.editing-support.treesj" },
   { import = "astrocommunity.editing-support.undotree" },
   { import = "astrocommunity.editing-support.vim-doge" },
   { import = "astrocommunity.file-explorer.oil-nvim" },

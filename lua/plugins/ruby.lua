@@ -1,3 +1,17 @@
+vim.g.rails_projections = {
+  ["app/components/*_component.rb"] = {
+    ["type"] = "component",
+    ["related"] = "app/components/{}_component.html.erb",
+  },
+  ["app/components/*_component.html.erb"] = {
+    ["type"] = "template",
+    ["related"] = "app/components/{}_component.rb",
+  },
+  ["test/models/*_test.rb"] = {
+    ["command"] = "modeltest",
+  },
+}
+
 return {
   { "zidhuss/neotest-minitest" },
   {
