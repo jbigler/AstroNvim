@@ -1,38 +1,73 @@
 return {
   {
     "olimorris/codecompanion.nvim",
-    opts = {
-      strategies = {
-        chat = {
-          adapter = "copilot",
-          model = "claude-sonnet-4",
+    event = "User AstroFile",
+    opts = function()
+      return {
+        adapters = {
+          copilot = function()
+            return require("codecompanion.adapters").extend("copilot", {
+              schema = {
+                model = {
+                  default = "claude-sonnet-4",
+                },
+              },
+            })
+          end,
         },
-        inline = {
-          adapter = "copilot",
-          model = "gpt-4o",
-        },
-        agent = {
-          adapter = "copilot",
-          model = "claude-opus-4",
-        },
-      },
-      extensions = {
-        mcphub = {
-          callback = "mcphub.extensions.codecompanion",
-          opts = {
-            show_result_in_chat = true, -- Show mcp tool results in chat
-            make_vars = true, -- Convert resources to #variables
-            make_slash_commands = true, -- Add prompts as /slash commands
+        extensions = {
+          mcphub = {
+            callback = "mcphub.extensions.codecompanion",
+            opts = {
+              show_result_in_chat = true, -- Show mcp tool results in chat
+              make_vars = true, -- Convert resources to #variables
+              make_slash_commands = true, -- Add prompts as /slash commands
+            },
+          },
+          vectorcode = {
+            ---@type VectorCode.CodeCompanion.ExtensionOpts
+            opts = {
+              tool_group = {
+                -- this will register a tool group called `@vectorcode_toolbox` that contains all 3 tools
+                enabled = true,
+                -- a list of extra tools that you want to include in `@vectorcode_toolbox`.
+                -- if you use @vectorcode_vectorise, it'll be very handy to include
+                -- `file_search` here.
+                extras = {},
+                collapse = false, -- whether the individual tools should be shown in the chat
+              },
+              tool_opts = {
+                ---@type VectorCode.CodeCompanion.LsToolOpts
+                ls = {},
+                ---@type VectorCode.CodeCompanion.VectoriseToolOpts
+                vectorise = {},
+                ---@type VectorCode.CodeCompanion.QueryToolOpts
+                query = {
+                  max_num = { chunk = -1, document = -1 },
+                  default_num = { chunk = 50, document = 10 },
+                  include_stderr = false,
+                  use_lsp = false,
+                  no_duplicate = true,
+                  chunk_mode = false,
+                  ---@type VectorCode.CodeCompanion.SummariseOpts
+                  summarise = {
+                    ---@type boolean|(fun(chat: CodeCompanion.Chat, results: VectorCode.QueryResult[]):boolean)|nil
+                    enabled = false,
+                    adapter = nil,
+                    query_augmented = true,
+                  },
+                },
+              },
+            },
           },
         },
-        vectorcode = {
-          opts = { add_tool = true, add_slash_command = true, tool_opts = {} },
-        },
-      },
-    },
+      }
+    end,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
+      "Davidyz/VectorCode",
+      "ravitemer/mcphub.nvim",
     },
   },
   {
@@ -53,7 +88,15 @@ return {
   },
   {
     "Davidyz/VectorCode",
-    version = "0.6.x", -- optional, depending on whether you're on nightly or release
+    lazy = true,
+    version = "*", -- optional, depending on whether you're on nightly or release
+    build = "uv tool upgrade 'vectorcode[lsp,mcp]'",
+    ---@module 'vectorcode'
+    ---@type VectorCode.Opts
+    ---@diagnostic disable-next-line: missing-fields
+    opts = {
+      async_backend = "default",
+    },
     dependencies = { "nvim-lua/plenary.nvim" },
     cmd = "VectorCode", -- if you're lazy-loading VectorCode
   },

@@ -1,3 +1,5 @@
+--if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+
 -- Helper function to prepend mise command
 local function prepend_mise(cmd)
   if vim.fn.executable "mise" == 1 then
