@@ -30,6 +30,7 @@ return {
         spell = false, -- sets vim.opt.spell
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
         wrap = false, -- sets vim.opt.wrap
+        shada = [[!,'100,<0,f100,s100,h]],
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)

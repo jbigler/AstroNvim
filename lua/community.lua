@@ -23,7 +23,6 @@ return {
   { import = "astrocommunity.markdown-and-latex.peek-nvim" },
   { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
   { import = "astrocommunity.motion.flash-nvim" },
-  { import = "astrocommunity.motion.harpoon" },
   { import = "astrocommunity.motion.mini-surround" },
   { import = "astrocommunity.motion.nvim-spider" },
   { import = "astrocommunity.motion.vim-matchup" },
