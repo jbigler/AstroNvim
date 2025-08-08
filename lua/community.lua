@@ -30,10 +30,11 @@ return {
   { import = "astrocommunity.pack.chezmoi" },
   { import = "astrocommunity.pack.full-dadbod" },
   { import = "astrocommunity.pack.html-css" },
+  { import = "astrocommunity.pack.harper" },
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.recipes.picker-lsp-mappings" },
   { import = "astrocommunity.split-and-window.mini-map" },
-  { import = "astrocommunity.utility.noice-nvim" },
+  -- { import = "astrocommunity.utility.noice-nvim" },
 }
