@@ -24,20 +24,20 @@ local function get_erb_lint_command()
   -- Check if erb_lint is available via bundler
   if has_gemfile then
     local bundle_list_cmd = "bundle list | grep -q erb_lint"
-    bundle_list_cmd = prepend_mise(bundle_list_cmd)
 
-    local exit_code = vim.fn.system(bundle_list_cmd) == 0 and 0 or 1
-    has_erb_lint_in_bundle = exit_code == 0
+    vim.fn.system(prepend_mise(bundle_list_cmd))
+    has_erb_lint_in_bundle = vim.v.shell_error == 0
   end
 
-  local cmd = has_erb_lint_in_bundle and { "bundle", "exec", "erb_lint" } or { "erb_lint" }
-  cmd = prepend_mise(cmd)
+  local base_cmd = has_erb_lint_in_bundle and { "bundle", "exec", "erb_lint" } or { "erb_lint" }
 
+  local cmd = prepend_mise(base_cmd)
+
+  -- vim.notify("erb_lint command: " .. vim.inspect(cmd), vim.log.levels.INFO)
   return cmd
 end
 
 -- Customize None-ls sources
-
 ---@type LazySpec
 return {
   "nvimtools/none-ls.nvim",

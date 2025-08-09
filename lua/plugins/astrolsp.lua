@@ -3,6 +3,14 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
+local function herb_lsp_cmd()
+  if vim.fn.executable "mise" == 1 then
+    return { "mise", "x", "--", "herb-language-server", "--stdio" }
+  else
+    return { "herb-language-server", "--stdio" }
+  end
+end
+
 local function ruby_lsp_cmd()
   if vim.fn.executable "mise" == 1 then
     return { "mise", "x", "--", "ruby-lsp" }
@@ -62,21 +70,29 @@ return {
         },
       },
       disabled = { -- disable formatting capabilities for the listed language servers
+        "harper_ls",
+        "herb_ls",
         -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
         -- "lua_ls",
       },
-      timeout_ms = 10000, -- default format timeout
+      timeout_ms = 20000, -- default format timeout
       -- filter = function(client) -- fully override the default formatting function
       --   return true
       -- end
     },
     -- enable servers that you already have installed without mason
     servers = {
+      "herb_ls",
       "ruby_lsp",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
+      herb_ls = {
+        mason = false,
+        cmd = herb_lsp_cmd(),
+        root_dir = function(fname) return require("lspconfig.util").root_pattern("Gemfile", ".git")(fname) end,
+      },
       ruby_lsp = {
         mason = false,
         cmd = ruby_lsp_cmd(),
@@ -98,7 +114,7 @@ return {
             codeLens = true,
             definition = true,
             workspaceSymbol = true,
-            signatureHel = true,
+            signatureHelp = true,
           },
           featuresConfiguration = {
             inlayHint = {

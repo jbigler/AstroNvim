@@ -44,3 +44,37 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     if is_rails then vim.cmd "cmap <buffer><script><expr> <Plug><cfile> rails#ruby_cfile()" end
   end,
 })
+
+local function run_rubocop_quickfix()
+  -- Run RuboCop with format that's easy to parse
+  local handle = io.popen "rubocop --format emacs 2>&1"
+  local result = handle:read "*a"
+  handle:close()
+
+  -- Parse RuboCop output into quickfix format
+  local qf_list = {}
+  for line in result:gmatch "[^\r\n]+" do
+    -- Match emacs format: filename:line:column: severity: message
+    local filename, lnum, col, severity, message = line:match "^([^:]+):(%d+):(%d+):%s*([^:]+):%s*(.+)$"
+    if filename then
+      table.insert(qf_list, {
+        filename = filename,
+        lnum = tonumber(lnum),
+        col = tonumber(col),
+        text = severity .. ": " .. message,
+        type = severity:lower():sub(1, 1), -- 'w' for warning, 'e' for error, etc.
+      })
+    end
+  end
+
+  -- Set the quickfix list
+  vim.fn.setqflist(qf_list, "r")
+
+  -- Open quickfix window
+  vim.cmd "copen"
+
+  print("RuboCop analysis complete. Found " .. #qf_list .. " offenses.")
+end
+
+-- Create a command to run this function
+vim.api.nvim_create_user_command("RubocopQuickfix", run_rubocop_quickfix, {})
