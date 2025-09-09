@@ -4,16 +4,19 @@ return {
     event = "User AstroFile",
     opts = function()
       return {
-        adapters = {
-          copilot = function()
-            return require("codecompanion.adapters").extend("copilot", {
-              schema = {
-                model = {
-                  default = "claude-sonnet-4",
-                },
-              },
-            })
-          end,
+        strategies = {
+          chat = {
+            adapter = {
+              name = "copilot",
+              model = "claude-sonnet-4",
+            },
+          },
+          inline = {
+            adapter = {
+              name = "copilot",
+              model = "gpt-5",
+            },
+          },
         },
         extensions = {
           mcphub = {

@@ -91,7 +91,17 @@ return {
       herb_ls = {
         mason = false,
         cmd = herb_lsp_cmd(),
+        filetypes = { "html", "eruby" },
         root_dir = function(fname) return require("lspconfig.util").root_pattern("Gemfile", ".git")(fname) end,
+      },
+      harper_ls = {
+        settings = {
+          ["harper-ls"] = {
+            linters = {
+              LongSentences = false,
+            },
+          },
+        },
       },
       ruby_lsp = {
         mason = false,
