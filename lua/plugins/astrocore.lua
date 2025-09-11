@@ -8,6 +8,9 @@ return {
   "AstroNvim/astrocore",
   ---@type AstroCoreOpts
   opts = {
+    on_keys = {
+      auto_hlsearch = false,
+    },
     -- Configure core features of AstroNvim
     features = {
       large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
@@ -58,6 +61,7 @@ return {
           end,
           desc = "Close buffer from tabline",
         },
+        ["<CR>"] = { "<Cmd>nohl<CR><CR>", desc = "Clear search highlight and enter" },
 
         -- tables with just a `desc` key will be registered with which-key if it's installed
         -- this is useful for naming menus
