@@ -159,10 +159,6 @@ return {
           },
         },
       },
-      stylelint_lsp = {
-        autoFixOnFormat = true,
-        autoFixOnSave = false,
-      },
     },
     -- customize how language servers are attached
     handlers = {

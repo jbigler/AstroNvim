@@ -20,7 +20,13 @@ return {
           inline = {
             adapter = {
               name = "copilot",
-              model = "gpt-5",
+              model = "copilot",
+            },
+          },
+          cmd = {
+            adapter = {
+              name = "copilot",
+              model = "grok-code-fast-1",
             },
           },
         },

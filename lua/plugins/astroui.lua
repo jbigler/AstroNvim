@@ -9,7 +9,9 @@ return {
   ---@type AstroUIOpts
   opts = {
     -- change colorscheme
-    colorscheme = "flexoki-dawn",
+    colorscheme = "rose-pine-main",
+    -- colorscheme = "flexoki-moon",
+    -- colorscheme = "alabaster", -- I like this idea of using few colors, but this is too light for me
     -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
     highlights = {
       init = { -- this table overrides highlights in all themes
@@ -33,5 +35,6 @@ return {
       LSPLoading9 = "⠇",
       LSPLoading10 = "⠏",
     },
+    lazygit = false,
   },
 }
