@@ -10,7 +10,7 @@ return {
     },
     opts = function()
       return {
-        strategies = {
+        interactions = {
           chat = {
             adapter = {
               name = "copilot",

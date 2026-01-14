@@ -1,3 +1,6 @@
+-- Prepend mise shims to PATH
+vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
+
 vim.cmd "autocmd FileType ruby setlocal indentkeys-=."
 
 -- This will run last in the setup process and is a good place to configure
