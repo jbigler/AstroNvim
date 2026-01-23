@@ -9,8 +9,8 @@ return {
   ---@type AstroUIOpts
   opts = {
     -- change colorscheme
-    colorscheme = "rose-pine-main",
-    -- colorscheme = "flexoki-moon",
+    colorscheme = "flexoki",
+    -- colorscheme = "rose-pine",
     -- colorscheme = "alabaster", -- I like this idea of using few colors, but this is too light for me
     -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
     highlights = {

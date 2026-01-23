@@ -50,7 +50,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 
 local function run_rubocop_quickfix()
   -- Run RuboCop with format that's easy to parse
-  local handle = io.popen "rubocop --format emacs 2>&1"
+  local handle = io.popen "bin/rubocop --format emacs 2>&1"
   local result = handle:read "*a"
   handle:close()
 
@@ -79,5 +79,5 @@ local function run_rubocop_quickfix()
   print("RuboCop analysis complete. Found " .. #qf_list .. " offenses.")
 end
 
--- Create a command to run this function
+-- -- Create a command to run this function
 vim.api.nvim_create_user_command("RubocopQuickfix", run_rubocop_quickfix, {})
