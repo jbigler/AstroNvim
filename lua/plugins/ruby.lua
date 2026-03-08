@@ -43,6 +43,7 @@ return {
     },
     config = function()
       local dap = require "dap"
+
       table.insert(dap.configurations.ruby, 1, {
         type = "ruby",
         name = "Debug file on remote server (app)",
@@ -65,7 +66,7 @@ return {
         bundle = "bundle",
         command = "ruby",
         script = "${file}",
-        port = 38698,
+        port = vim.env.RUBY_DEBUG_PORT,
         server = "127.0.0.1",
         options = {
           source_filetype = "ruby",
