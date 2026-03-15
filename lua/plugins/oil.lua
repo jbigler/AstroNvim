@@ -13,5 +13,10 @@ return {
         },
       },
     },
+    opts = {
+      float = {
+        border = "rounded",
+      },
+    },
   },
 }
