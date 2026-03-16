@@ -59,6 +59,7 @@ return {
       -- ERB Lint using dynamic command determination
       null_ls.builtins.diagnostics.erb_lint.with {
         command = get_erb_lint_command(),
+        ignore_stderr = true, -- Suppress stderr output to avoid parser warning that breaks the diagnostics
       },
       null_ls.builtins.formatting.erb_lint.with {
         command = get_erb_lint_command(),
