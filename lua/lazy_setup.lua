@@ -16,6 +16,9 @@ require("lazy").setup({
 } --[[@as LazySpec]], {
   -- Configure any other `lazy.nvim` configuration options here
   install = { colorscheme = { "astrotheme", "habamax" } },
+  pkg = {
+    sources = { "lazy", "packspec" },
+  },
   ui = { backdrop = 100 },
   performance = {
     rtp = {
