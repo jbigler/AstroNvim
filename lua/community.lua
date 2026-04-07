@@ -35,6 +35,7 @@ return {
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.pack.typescript" },
+  { import = "astrocommunity.recipes.diagnostic-virtual-lines-current-line" },
   { import = "astrocommunity.recipes.picker-lsp-mappings" },
   { import = "astrocommunity.split-and-window.mini-map" },
 }
