@@ -4,6 +4,12 @@ return {
   {
     "olimorris/codecompanion.nvim",
     event = "User AstroFile",
+    cmd = {
+      "CodeCompanion",
+      "CodeCompanionActions",
+      "CodeCompanionChat",
+      "CodeCompanionCmd",
+    },
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",

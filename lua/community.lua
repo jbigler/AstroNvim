@@ -5,9 +5,7 @@
 ---@type LazySpec
 return {
   "AstroNvim/astrocommunity",
-  { import = "astrocommunity.bars-and-lines.vim-illuminate" },
   { import = "astrocommunity.colorscheme.rose-pine" },
-  { import = "astrocommunity.colorscheme.kanagawa-paper-nvim" },
   { import = "astrocommunity.completion.copilot-lua-cmp" },
   { import = "astrocommunity.debugging.nvim-dap-repl-highlights" },
   { import = "astrocommunity.debugging.nvim-dap-view" },
@@ -30,7 +28,6 @@ return {
   { import = "astrocommunity.motion.mini-surround" },
   { import = "astrocommunity.motion.nvim-spider" },
   { import = "astrocommunity.motion.vim-matchup" },
-  -- { import = "astrocommunity.pack.clojure" },
   { import = "astrocommunity.pack.chezmoi" },
   { import = "astrocommunity.pack.full-dadbod" },
   { import = "astrocommunity.pack.html-css" },
@@ -40,5 +37,4 @@ return {
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.recipes.picker-lsp-mappings" },
   { import = "astrocommunity.split-and-window.mini-map" },
-  -- { import = "astrocommunity.utility.noice-nvim" },
 }

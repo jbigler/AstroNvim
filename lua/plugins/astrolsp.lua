@@ -11,41 +11,6 @@ local function herb_lsp_cmd()
   end
 end
 
-local function ruby_lsp_cmd()
-  if vim.fn.executable "mise" == 1 then
-    return { "mise", "x", "--", "ruby-lsp" }
-  else
-    return { "ruby-lsp" }
-  end
-end
-
-local function add_ruby_deps_command(client, bufnr)
-  vim.api.nvim_buf_create_user_command(bufnr, "ShowRubyDeps", function(opts)
-    local params = vim.lsp.util.make_text_document_params()
-    local showAll = opts.args == "all"
-
-    client.request("rubyLsp/workspace/dependencies", params, function(error, result)
-      if error then
-        print("Error showing deps: " .. error)
-        return
-      end
-
-      local qf_list = {}
-      for _, item in ipairs(result) do
-        if showAll or item.dependency then
-          table.insert(qf_list, {
-            text = string.format("%s (%s) - %s", item.name, item.version, item.dependency),
-            filename = item.path,
-          })
-        end
-      end
-
-      vim.fn.setqflist(qf_list)
-      vim.cmd "copen"
-    end, bufnr)
-  end, { nargs = "?", complete = function() return { "all" } end })
-end
-
 ---@type LazySpec
 return {
   "AstroNvim/astrolsp",
@@ -84,9 +49,10 @@ return {
     servers = {
       "herb_ls",
       "ruby_lsp",
+      -- "pyright"
     },
-    -- customize language server configuration options passed to `lspconfig`
-    ---@diagnostic disable: missing-fields
+    -- customize language server configuration passed to `vim.lsp.config`
+    -- client specific configuration can also go in `lsp/` in your configuration root (see `:h lsp-config`)
     config = {
       herb_ls = {
         mason = false,
@@ -101,38 +67,6 @@ return {
               LongSentences = false,
             },
           },
-        },
-      },
-      ruby_lsp = {
-        mason = false,
-        cmd = ruby_lsp_cmd(),
-        on_attach = function(client, buffer) add_ruby_deps_command(client, buffer) end,
-        init_options = {
-          formatter = "auto",
-          enabledFeatures = {
-            codeActions = true,
-            diagnostics = true,
-            documentHighlights = true,
-            documentLink = true,
-            documentSymbols = true,
-            foldingRanges = true,
-            formatting = true,
-            hover = true,
-            inlayHint = true,
-            selectionRanges = true,
-            completion = true,
-            codeLens = true,
-            definition = true,
-            workspaceSymbol = true,
-            signatureHelp = true,
-          },
-          featuresConfiguration = {
-            inlayHint = {
-              implicitHashValue = true,
-              implicitRescue = true,
-            },
-          },
-          experimentalFeaturesEnabled = true,
         },
       },
       html = {
@@ -159,15 +93,15 @@ return {
           },
         },
       },
+      -- ["*"] = { capabilities = {} }, -- modify default LSP client settings such as capabilities
     },
     -- customize how language servers are attached
     handlers = {
-      -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
-      -- function(server, opts) require("lspconfig")[server].setup(opts) end
+      -- a function with the key `*` modifies the default handler, functions takes the server name as the parameter
+      -- ["*"] = function(server) vim.lsp.enable(server) end
 
-      -- the key is the server that is being setup with `lspconfig`
+      -- the key is the server that is being setup with `vim.lsp.config`
       -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
-      -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
     },
     -- Configure buffer local auto commands to add when attaching a language server
     autocmds = {
@@ -186,7 +120,7 @@ return {
           -- the rest of the autocmd options (:h nvim_create_autocmd)
           desc = "Refresh codelens (buffer)",
           callback = function(args)
-            if require("astrolsp").config.features.codelens then vim.lsp.codelens.refresh { bufnr = args.buf } end
+            if require("astrolsp").config.features.codelens then vim.lsp.codelens.enable(true, { bufnr = args.buf }) end
           end,
         },
       },
@@ -204,13 +138,13 @@ return {
           function() require("astrolsp.toggles").buffer_semantic_tokens() end,
           desc = "Toggle LSP semantic highlight (buffer)",
           cond = function(client)
-            return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
+            return client:supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
           end,
         },
       },
     },
     -- A custom `on_attach` function to be run after the default `on_attach` function
-    -- takes two parameters `client` and `bufnr`  (`:h lspconfig-setup`)
+    -- takes two parameters `client` and `bufnr`  (`:h lsp-attach`)
     on_attach = function(client, bufnr)
       -- this would disable semanticTokensProvider for all clients
       -- client.server_capabilities.semanticTokensProvider = nil
