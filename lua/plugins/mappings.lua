@@ -1,3 +1,5 @@
+vim.g.started_headless = #vim.api.nvim_list_uis() == 0
+
 return {
   {
     "AstroNvim/astrocore",
@@ -19,25 +21,27 @@ return {
             end,
             desc = "Copy the current relative file path",
           },
+
           ["<Leader>q"] = {
             function()
-              for _, ui in pairs(vim.api.nvim_list_uis()) do
-                if ui.chan and not ui.stdout_tty then
-                  vim.fn.chanclose(ui.chan)
-                else
-                  vim.cmd "confirm q"
-                end
+              if vim.g.started_headless then
+                -- Safely disconnects the remote UI without killing the background server
+                vim.cmd "detach"
+              else
+                -- Standard quit for local TUI/GUI sessions
+                vim.cmd "quit"
               end
             end,
-            desc = "Disconnect from Remote Neovim",
+            desc = "Smart Quit: Quit locally or detach remote UI",
           },
+
           -- Page up and down go to center of screen
           ["<C-u>"] = { "<C-u>zz", desc = "Half page up" },
           ["<C-d>"] = { "<C-d>zz", desc = "Half page down" },
           ["n"] = { "nzzzv", desc = "Move to next search item" },
           ["N"] = { "Nzzzv", desc = "Move to previous search item" },
-          ["C-f"] = { "C-fzz", desc = "Page down" },
-          ["C-b"] = { "C-bzz", desc = "Page up" },
+          ["<C-f>"] = { "<C-f>zz", desc = "Page down" },
+          ["<C-b>"] = { "<C-b>zz", desc = "Page up" },
         },
       },
     },
