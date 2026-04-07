@@ -5,6 +5,17 @@
 
 ---@type LazySpec
 return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    init = function()
+      vim.treesitter.query.add_predicate("is-mise?", function(_match, _pattern, source, _predicate)
+        local bufnr = type(source) == "number" and source or 0
+        local filepath = vim.api.nvim_buf_get_name(bufnr)
+        local filename = vim.fn.fnamemodify(filepath, ":t")
+        return string.match(filename, ".*mise.*%.toml$") ~= nil
+      end, { force = true, all = false })
+    end,
+  },
   "AstroNvim/astrocore",
   ---@type AstroCoreOpts
   opts = {
