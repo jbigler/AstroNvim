@@ -20,21 +20,14 @@ return {
     config = function() require("luasnip").filetype_extend("ruby", { "rails" }) end,
   },
   {
-    "nvim-treesitter/nvim-treesitter",
-    optional = true,
-    opts = function(_, opts)
-      if opts.ensure_installed ~= "all" then
-        opts.ensure_installed = require("astrocore").list_insert_unique(
-          opts.ensure_installed,
-          { "ruby", "embedded_template", "sql", "regex" }
-        )
-      end
-      opts.highlight = {
-        enable = true,
-        -- Disable due to issues with incorrect block detection
-        -- additional_vim_regex_highlighting = { "ruby" },
-      }
-    end,
+    "AstroNvim/astrocore",
+    ---@type AstroCoreOpts
+    opts = {
+      treesitter = {
+        ensure_installed = { "ruby", "embedded_template", "sql", "regex" },
+        highlight = true,
+      },
+    },
   },
   {
     "mfussenegger/nvim-dap",

@@ -1,5 +1,3 @@
---if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- Helper function to prepend mise command
 local function prepend_mise(cmd)
   if vim.fn.executable "mise" == 1 then
@@ -33,7 +31,6 @@ local function get_erb_lint_command()
 
   local cmd = prepend_mise(base_cmd)
 
-  -- vim.notify("erb_lint command: " .. vim.inspect(cmd), vim.log.levels.INFO)
   return cmd
 end
 

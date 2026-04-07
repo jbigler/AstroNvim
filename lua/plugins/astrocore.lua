@@ -8,6 +8,7 @@ return {
   "AstroNvim/astrocore",
   ---@type AstroCoreOpts
   opts = {
+    -- Keep the search highlight until pressing Enter
     on_keys = {
       auto_hlsearch = false,
     },
@@ -25,6 +26,19 @@ return {
       virtual_text = true,
       underline = true,
     },
+    -- passed to `vim.filetype.add`
+    -- filetypes = {
+    --   -- see `:h vim.filetype.add` for usage
+    --   extension = {
+    --     foo = "fooscript",
+    --   },
+    --   filename = {
+    --     [".foorc"] = "fooscript",
+    --   },
+    --   pattern = {
+    --     [".*/etc/foo/.*"] = "fooscript",
+    --   },
+    -- },
     -- vim options can be configured here
     options = {
       opt = { -- vim.opt.<key>
@@ -33,7 +47,7 @@ return {
         spell = false, -- sets vim.opt.spell
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
         wrap = false, -- sets vim.opt.wrap
-        shada = [[!,'100,<0,f100,s100,h]],
+        shada = [[!,'100,<0,f100,s100,h]], -- for custom global marks
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
