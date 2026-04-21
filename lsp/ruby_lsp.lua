@@ -51,7 +51,7 @@ return {
       inlayHint = true,
       selectionRanges = true,
       completion = true,
-      codeLens = true,
+      codeLens = false,
       definition = true,
       workspaceSymbol = true,
       signatureHelp = true,

@@ -14,7 +14,6 @@ return {
   { import = "astrocommunity.editing-support.neogen" },
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
-  { import = "astrocommunity.editing-support.refactoring-nvim" },
   { import = "astrocommunity.editing-support.text-case-nvim" },
   { import = "astrocommunity.editing-support.todo-comments-nvim" },
   { import = "astrocommunity.editing-support.undotree" },
