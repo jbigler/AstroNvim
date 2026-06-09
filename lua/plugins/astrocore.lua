@@ -48,6 +48,7 @@ return {
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
         wrap = false, -- sets vim.opt.wrap
         shada = [[!,'100,<0,f100,s100,h]], -- for custom global marks
+        tags = "tags.local,tags;",
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
