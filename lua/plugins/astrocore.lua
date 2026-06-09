@@ -87,4 +87,9 @@ return {
       },
     },
   },
+  init = function()
+    -- Dynamically look at whatever 'complete' is currently set to,
+    -- and surgically remove ONLY the "t" (tags) source.
+    vim.opt.complete:remove "t"
+  end,
 }

@@ -14,7 +14,7 @@ return {
         opts = {
           config = {
             tailwindcss = {
-              -- filetypes = { "html", "eruby", "ruby", "css" },
+              filetypes = { "html", "eruby", "ruby", "css" },
               settings = {
                 tailwindCSS = {
                   experimental = {
@@ -24,6 +24,8 @@ return {
                       "class:\\s*'([^']*)'",
                       "class=\\s*'([^']*)'",
                       "%w\\[([^\\]]*)\\]",
+                      -- class_names("foo", "bar") -> grab inside parens, then each quoted string
+                      { "class_names\\(([^)]*)\\)", "[\"']([^\"']*)[\"']" },
                     },
                     -- configFile = "app/assets/tailwind/application.css",
                   },
@@ -46,14 +48,6 @@ return {
         require("astrocore").list_insert_unique(opts.ensure_installed, { "tailwindcss-language-server" })
     end,
   },
-  {
-    "NvChad/nvim-colorizer.lua",
-    optional = true,
-    opts = {
-      user_default_options = {
-        names = true,
-        tailwind = true,
-      },
-    },
-  },
+  -- Disabled in favor of oklch-color-picker.nvim (supports oklch()).
+  { "NvChad/nvim-colorizer.lua", optional = true, enabled = false },
 }
