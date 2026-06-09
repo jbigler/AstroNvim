@@ -34,6 +34,14 @@ return {
             end,
             desc = "Smart Quit: Quit locally or detach remote UI",
           },
+          -- Overwrite AstroNvim's default recent files keymap
+          ["<Leader>fo"] = {
+            function()
+              -- Directly invoke snacks picker with the current working directory filter
+              require("snacks").picker.recent { filter = { cwd = true } }
+            end,
+            desc = "Find recent files (Current CWD only)",
+          },
 
           -- Page up and down go to center of screen
           ["<C-u>"] = { "<C-u>zz", desc = "Half page up" },
