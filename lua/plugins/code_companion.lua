@@ -30,8 +30,8 @@ return {
         interactions = {
           chat = {
             adapter = {
-              name = "copilot",
-              model = "claude-opus-4.6",
+              name = "claude_code",
+              model = "Opus",
             },
           },
           inline = {

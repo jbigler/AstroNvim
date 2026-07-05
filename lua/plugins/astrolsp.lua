@@ -35,7 +35,6 @@ return {
         },
       },
       disabled = { -- disable formatting capabilities for the listed language servers
-        "herb_ls",
         -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
         -- "lua_ls",
       },
@@ -46,18 +45,17 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {
-      "herb_ls",
       "ruby_lsp",
+      "herb_ls",
       -- "pyright"
     },
     -- customize language server configuration passed to `vim.lsp.config`
     -- client specific configuration can also go in `lsp/` in your configuration root (see `:h lsp-config`)
     config = {
       herb_ls = {
-        mason = false,
         cmd = herb_lsp_cmd(),
         filetypes = { "html", "eruby" },
-        root_dir = function(fname) return require("lspconfig.util").root_pattern("Gemfile", ".git")(fname) end,
+        root_markers = { "Gemfile", ".git" },
       },
       html = {
         filetypes = { "html", "eruby" },
