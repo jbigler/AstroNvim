@@ -26,6 +26,27 @@ return {
               })
             end,
           },
+          http = {
+            turbollm = function()
+              return require("codecompanion.adapters").extend("openai_compatible", {
+                name = "turbollm",
+                formatted_name = "TurboLLM (local)",
+                env = {
+                  url = "http://192.168.1.50:9009",
+                  api_key = "LLM_KEY",
+                  chat_url = "/v1/chat/completions",
+                },
+                schema = {
+                  model = {
+                    default = "qwen3.6-35b-a3b",
+                    choices = {
+                      "qwen3.6-35b-a3b",
+                    },
+                  },
+                },
+              })
+            end,
+          },
         },
         interactions = {
           chat = {
@@ -44,16 +65,6 @@ return {
             adapter = {
               name = "copilot",
               model = "grok-code-fast-1",
-            },
-          },
-        },
-        extensions = {
-          mcphub = {
-            callback = "mcphub.extensions.codecompanion",
-            opts = {
-              show_result_in_chat = true, -- Show mcp tool results in chat
-              make_vars = false, -- Convert resources to #variables TODO: put back after fix
-              make_slash_commands = true, -- Add prompts as /slash commands
             },
           },
         },
@@ -137,14 +148,6 @@ return {
           if not opts.file_types then opts.file_types = { "markdown" } end
           opts.file_types = require("astrocore").list_insert_unique(opts.file_types, { "codecompanion" })
         end,
-      },
-      {
-        "ravitemer/mcphub.nvim",
-        dependencies = {
-          "nvim-lua/plenary.nvim",
-        },
-        build = "npm install -g mcp-hub@latest",
-        config = function() require("mcphub").setup() end,
       },
     },
   },
