@@ -1,5 +1,70 @@
 local prefix = "<Leader>A"
 
+--- render-markdown <-> CodeCompanion stale-tree guard -------------------------
+--
+-- render-markdown parses the buffer's treesitter tree and then reads node text
+-- inside a `vim.schedule` callback. CodeCompanion -- especially the ACP adapter
+-- -- rewrites regions of the chat buffer *in place* while streaming (tool call
+-- blocks and reasoning sections get replaced over shrinking ranges, not just
+-- appended). By the time the scheduled callback runs, a node's range can point
+-- past the new end of the buffer and `nvim_buf_get_text` raises
+-- "Index out of bounds" out of vim/treesitter.lua.
+--
+-- Fix: pause rendering for the duration of a chat turn, resume once things go
+-- quiet. Side benefit -- no anti-conceal jitter while tokens stream in.
+
+local RMD_QUIET_MS = 1200 -- grace period after a request, in case a tool loop starts another
+local RMD_DONE_MS = 100 -- turn is genuinely over, hand the buffer back promptly
+
+---@type table<integer, integer> bufnr -> generation, used to cancel pending resumes
+local rmd_gen = {}
+
+---@param buf integer
+---@param enable boolean
+local function rmd_set(buf, enable)
+  if not vim.api.nvim_buf_is_valid(buf) then return end
+  local ok, rmd = pcall(require, "render-markdown")
+  if not ok then return end
+  -- `buf_enable`/`buf_disable` act on the *current* buffer, so borrow it briefly
+  pcall(vim.api.nvim_buf_call, buf, function()
+    if enable then
+      rmd.buf_enable()
+    else
+      rmd.buf_disable()
+    end
+  end)
+end
+
+---@param buf integer
+local function rmd_pause(buf)
+  rmd_gen[buf] = (rmd_gen[buf] or 0) + 1 -- invalidates any in-flight resume
+  rmd_set(buf, false)
+end
+
+---@param buf integer
+---@param delay integer
+local function rmd_resume(buf, delay)
+  local gen = (rmd_gen[buf] or 0) + 1
+  rmd_gen[buf] = gen
+  vim.defer_fn(function()
+    if rmd_gen[buf] == gen then rmd_set(buf, true) end
+  end, delay)
+end
+
+-- CodeCompanion fires these as `User CodeCompanion<Event>` with `data.bufnr`.
+-- ChatSubmitted fires again for every tool-loop auto-submit; ChatDone fires
+-- once when the whole turn ends. Bracketing on those survives tool loops
+-- without flickering, and the debounced RequestFinished is a safety net in case
+-- ChatDone never arrives (e.g. an adapter error path).
+local rmd_handlers = {
+  CodeCompanionChatSubmitted = function(buf) rmd_pause(buf) end,
+  CodeCompanionRequestStarted = function(buf) rmd_pause(buf) end,
+  CodeCompanionRequestFinished = function(buf) rmd_resume(buf, RMD_QUIET_MS) end,
+  CodeCompanionChatDone = function(buf) rmd_resume(buf, RMD_DONE_MS) end,
+  CodeCompanionChatStopped = function(buf) rmd_resume(buf, RMD_DONE_MS) end,
+  CodeCompanionChatClosed = function(buf) rmd_gen[buf] = nil end,
+}
+
 return {
   {
     "olimorris/codecompanion.nvim",
@@ -38,9 +103,10 @@ return {
                 },
                 schema = {
                   model = {
-                    default = "qwen3.6-35b-a3b",
+                    default = "qwen-general",
                     choices = {
-                      "qwen3.6-35b-a3b",
+                      "qwen-general",
+                      "ornith-coder",
                     },
                   },
                 },
@@ -127,6 +193,28 @@ return {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
+          opts.autocmds = opts.autocmds or {}
+          opts.autocmds.codecompanion_render_markdown = {
+            {
+              event = "User",
+              pattern = vim.tbl_keys(rmd_handlers),
+              desc = "Pause render-markdown while CodeCompanion streams into the chat buffer",
+              callback = function(args)
+                local buf = args.data and args.data.bufnr
+                local handler = rmd_handlers[args.match]
+                if not (buf and handler) then return end
+                if not vim.api.nvim_buf_is_valid(buf) then
+                  rmd_gen[buf] = nil
+                  return
+                end
+                -- Request events also fire for the inline assistant, where bufnr
+                -- is a source buffer. Only touch the chat buffer.
+                if vim.bo[buf].filetype ~= "codecompanion" then return end
+                handler(buf)
+              end,
+            },
+          }
+
           if not opts.mappings then opts.mappings = {} end
           opts.mappings.n = opts.mappings.n or {}
           opts.mappings.v = opts.mappings.v or {}
@@ -145,8 +233,18 @@ return {
         "MeanderingProgrammer/render-markdown.nvim",
         optional = true,
         opts = function(_, opts)
+          local astrocore = require "astrocore"
+
           if not opts.file_types then opts.file_types = { "markdown" } end
-          opts.file_types = require("astrocore").list_insert_unique(opts.file_types, { "codecompanion" })
+          opts.file_types = astrocore.list_insert_unique(opts.file_types, { "codecompanion" })
+
+          -- Fewer parse cycles means fewer windows for the schedule callback to
+          -- race buffer mutation. Scoped via `overrides.filetype` so ordinary
+          -- markdown editing keeps the snappy 100ms default.
+          opts.overrides = opts.overrides or {}
+          opts.overrides.filetype = opts.overrides.filetype or {}
+          opts.overrides.filetype.codecompanion =
+            astrocore.extend_tbl(opts.overrides.filetype.codecompanion or {}, { debounce = 300 })
         end,
       },
     },
