@@ -43,14 +43,18 @@ return {
       local probe_cache = {} ---@type table<string, { mtime: integer, ok: boolean }>
 
       ---@param path string
+      ---@param force? boolean skip the cached verdict (for diagnostics)
       ---@return boolean
-      local function css_usable(path)
+      local function css_usable(path, force)
         local stat = vim.uv.fs_stat(path)
         if not stat or stat.type ~= "file" or stat.size == 0 then return false end
 
-        -- Re-probe whenever the watcher rebuilds
+        -- Re-probe whenever the watcher rebuilds. Only the usable/unusable
+        -- verdict is cached -- rustywind itself is a fresh process each call and
+        -- always re-reads the stylesheet, so new @theme tokens are picked up as
+        -- soon as the file is written.
         local cached = probe_cache[path]
-        if cached and cached.mtime == stat.mtime.sec then return cached.ok end
+        if not force and cached and cached.mtime == stat.mtime.sec then return cached.ok end
 
         local probe = vim
           .system({
@@ -85,6 +89,50 @@ return {
           local path = vim.fs.joinpath(root, rel)
           if css_usable(path) then return path end
         end
+      end
+
+      --- Explain a no-op. "Nothing to sort" conflates three very different
+      --- situations, so work out which one actually happened.
+      ---
+      --- rustywind gives no usable signal: it exits 0 and echoes its input both
+      --- when the classes are already ordered AND when it has no opinion about
+      --- them, and it only warns on stderr for completely empty input. So probe
+      --- instead -- reverse the tokens and see whether rustywind puts them back.
+      --- If it does, it recognises them and the original really was sorted. If
+      --- the reversed order survives untouched, it has no opinion.
+      ---@param text string
+      ---@param css string?
+      ---@return string
+      local function explain_no_change(text, css)
+        local runs = {}
+        for run in text:gmatch "['\"]([^'\"]*)['\"]" do
+          if run:find "%S" then runs[#runs + 1] = run end
+        end
+        if #runs == 0 then runs = { text } end
+
+        local sortable = false
+        for _, run in ipairs(runs) do
+          local tokens = vim.split(vim.trim(run), "%s+", { trimempty = true })
+          if #tokens >= 2 then
+            sortable = true
+            local reversed = {}
+            for i = #tokens, 1, -1 do
+              reversed[#reversed + 1] = tokens[i]
+            end
+            local input = table.concat(reversed, " ")
+            local cmd = { "rustywind", "--stdin", "--custom-regex", "[ \\t]*([\\S][\\s\\S]*)" }
+            if css then vim.list_extend(cmd, { "--output-css-file", css }) end
+            local probe = vim.system(cmd, { stdin = input, text = true }):wait()
+            if probe.code == 0 and vim.trim(probe.stdout or "") ~= input then
+              return "already sorted" -- rustywind has an opinion, and it agrees
+            end
+          end
+        end
+
+        if not sortable then return "found no class list with 2 or more classes" end
+        return "classes not recognised by "
+          .. (css and vim.fn.fnamemodify(css, ":~:.") or "rustywind's built-in list")
+          .. ", left as-is"
       end
 
       --- Sort Tailwind classes via rustywind.
@@ -129,7 +177,24 @@ return {
         -- rustywind exits 0 and echoes its input when it finds no classes, so
         -- comparing before writing keeps the buffer from being marked modified.
         local sorted = vim.split(((result.stdout or ""):gsub("\n$", "")), "\n", { plain = true })
-        if vim.deep_equal(lines, sorted) then return vim.notify("rustywind: nothing to sort", vim.log.levels.INFO) end
+        if vim.deep_equal(lines, sorted) then
+          local text = table.concat(lines, "\n")
+          local scope = whole and "buffer" or ("lines %d-%d"):format(line1, line2)
+          -- Document mode only understands real `class="..."` markup. A Rails
+          -- view built from `tag.li class:` / `class_names(...)` has no HTML
+          -- class attributes at all, so there is genuinely nothing here for it.
+          if not text:find "[cC]lass[%w_]*%s*=%s*['\"]" then
+            local ruby = text:find "[cC]lass[%w_]*%s*:%s*" or text:find "class_names"
+            return vim.notify(
+              ("rustywind: no HTML class= attributes in %s%s"):format(
+                scope,
+                ruby and " -- these are Ruby-side, select them and use <Leader>lW" or ""
+              ),
+              vim.log.levels.INFO
+            )
+          end
+          return vim.notify(("rustywind: %s (%s)"):format(explain_no_change(text, css), scope), vim.log.levels.INFO)
+        end
 
         local view = vim.fn.winsaveview()
         vim.api.nvim_buf_set_lines(buf, first, last, false, sorted)
@@ -236,7 +301,7 @@ return {
           end
         end
 
-        vim.notify("rustywind: nothing to sort", vim.log.levels.INFO)
+        vim.notify("rustywind: " .. explain_no_change(text, css), vim.log.levels.INFO)
       end
 
       opts.commands.RustywindSortList = {
@@ -273,8 +338,18 @@ return {
               elseif stat.size == 0 then
                 status = "empty"
               else
-                status = css_usable(path) and "USABLE" or "present but yields no order (minified?)"
-                status = ("%s, %.1f KB"):format(status, stat.size / 1024)
+                -- Reading the head is a cheap, independent minification check
+                local fd = vim.uv.fs_open(path, "r", 438)
+                local head = fd and vim.uv.fs_read(fd, 400, 0) or ""
+                if fd then vim.uv.fs_close(fd) end
+                local minified = not head:find "\n.*\n"
+
+                status = css_usable(path, true) and "USABLE" or "yields no order"
+                status = ("%s, %.1f KB, %s"):format(
+                  status,
+                  stat.size / 1024,
+                  minified and "looks MINIFIED" or "unminified"
+                )
               end
               lines[#lines + 1] = ("  %-40s %s"):format(rel, status)
             end
