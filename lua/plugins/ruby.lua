@@ -10,6 +10,13 @@ vim.g.rails_projections = {
   ["test/models/*_test.rb"] = {
     ["command"] = "modeltest",
   },
+  ["app/javascript/controllers/*.js"] = {
+    ["type"] = "stimulus",
+    ["alternate"] = "test/javascript/controllers/{}.test.js",
+  },
+  ["test/javascript/controllers/*.test.js"] = {
+    ["alternate"] = "app/javascript/controllers/{}.js",
+  },
 }
 
 return {
