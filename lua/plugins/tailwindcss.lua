@@ -307,6 +307,9 @@ return {
       opts.commands.RustywindSortList = {
         sort_selection,
         desc = "Sort Tailwind classes within the visual selection",
+        -- accept the `'<,'>` that `:` inserts from visual mode; the selection
+        -- itself is still read from the marks
+        range = true,
       }
 
       opts.commands.RustywindInfo = {
