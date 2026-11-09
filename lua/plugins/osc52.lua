@@ -1,7 +1,6 @@
 -- Author: Jeff Bigler
--- This snippet enables the OSC 52 clipboard when in a Docker container
--- with the DOCKER environment variable set to "1".
-if os.getenv "DOCKER" ~= "1" then return {} end
+-- with the DOCKER environment variable set to "1" or a podman container
+if os.getenv "DOCKER" ~= "1" and os.getenv "container" == nil then return {} end
 
 vim.o.clipboard = "unnamedplus"
 
